@@ -35,19 +35,29 @@ export default function SubmitSurprise() {
                 }),
             });
 
+
             if (!response.ok) {
-                throw new Error("Unable to submit your message.");
+                const data = await response.json().catch(() => null);
+
+                throw new Error(
+                    data?.error || "Unable to submit your message."
+                );
             }
 
             setSuccess(true);
             setName("");
             setMessage("");
             setCategory("sweet");
-        } catch {
-            setError("Something went wrong. Please try again.");
+        } catch (error) {
+            setError(
+                error instanceof Error
+                    ? error.message
+                    : "Something went wrong. Please try again."
+            );
         } finally {
             setLoading(false);
         }
+
     }
 
     return (

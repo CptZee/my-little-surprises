@@ -1,6 +1,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { submissionRateLimit } from "@/lib/rate-limit";
 
 const categories = [
     "smile",
@@ -45,6 +46,61 @@ export async function POST(request: NextRequest) {
         if (!url || !key) {
             return NextResponse.json(
                 { error: "Service unavailable." },
+                { status: 503 }
+            );
+        }
+
+        const forwardedIp = request.headers
+            .get("x-vercel-forwarded-for")
+            ?.split(",")[0]
+            ?.trim();
+
+        const ip =
+            forwardedIp ||
+            (process.env.NODE_ENV === "development"
+                ? "127.0.0.1"
+                : null);
+
+        if (!ip) {
+            return NextResponse.json(
+                { error: "Unable to verify submission origin." },
+                { status: 400 }
+            );
+        }
+
+
+        try {
+            const { success, reset } =
+                await submissionRateLimit.limit(ip);
+
+            if (!success) {
+                const retryAfter = Math.max(
+                    1,
+                    Math.ceil((reset - Date.now()) / 1000)
+                );
+
+                return NextResponse.json(
+                    {
+                        error:
+                            "You've sent enough little surprises for now! ♡ Please try again later.",
+                        retryAfter,
+                    },
+                    {
+                        status: 429,
+                        headers: {
+                            "Retry-After": retryAfter.toString(),
+                        },
+                    }
+                );
+            }
+        } catch (error) {
+            console.error("Rate limit unavailable:", error);
+
+            return NextResponse.json(
+                {
+                    error:
+                        "Submissions are temporarily unavailable. Please try again later.",
+                },
                 { status: 503 }
             );
         }
