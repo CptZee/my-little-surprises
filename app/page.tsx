@@ -143,15 +143,111 @@ export default function Home() {
           <div className="sunburst">✧</div>
           <div className="cloud cloud-left" />
           <div className="cloud cloud-right" />
-          <div className="envelope">
-            <div className="letter">
-              <span className="letter-spark">✦</span>
-              <span className="letter-heart">♡</span>
-              <span className="letter-caption">for you, always</span>
-            </div>
-            <div className="envelope-flap" />
-            <div className="seal">♡</div>
+
+          <div className="envelope-illustration" aria-hidden="true">
+            <svg
+              viewBox="0 0 320 280"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+            >
+              <defs>
+                <filter id="envelope-shadow" x="-30%" y="-30%" width="160%" height="180%">
+                  <feDropShadow
+                    dx="0"
+                    dy="10"
+                    stdDeviation="10"
+                    floodColor="#d996a1"
+                    floodOpacity="0.18"
+                  />
+                </filter>
+              </defs>
+
+              <g transform="rotate(-5 160 150)" filter="url(#envelope-shadow)">
+                {/* Back of envelope */}
+                <rect
+                  x="45"
+                  y="105"
+                  width="230"
+                  height="145"
+                  rx="13"
+                  fill="#F9B9B4"
+                />
+
+                {/* Letter, tucked into envelope */}
+                <rect
+                  x="75"
+                  y="45"
+                  width="170"
+                  height="155"
+                  rx="9"
+                  fill="#FFF9F2"
+                />
+
+                {/* Letter decorations */}
+                <path
+                  d="M105 77 L109 87 L119 91 L109 95 L105 105 L101 95 L91 91 L101 87 Z"
+                  fill="#F6C86B"
+                />
+
+                <text
+                  x="160"
+                  y="112"
+                  textAnchor="middle"
+                  fontSize="30"
+                  fill="#F28BAA"
+                >
+                  ♡
+                </text>
+
+                <text
+                  x="160"
+                  y="137"
+                  textAnchor="middle"
+                  fontSize="12"
+                  fill="#B97D91"
+                  fontFamily="cursive"
+                >
+                  for you, always
+                </text>
+
+                {/* Side folds */}
+                <path
+                  d="M45 115 L160 190 L45 248 Z"
+                  fill="#FFD4C7"
+                />
+                <path
+                  d="M275 115 L160 190 L275 248 Z"
+                  fill="#FFC6BE"
+                />
+
+                {/* Front pocket */}
+                <path
+                  d="M45 248 L160 165 L275 248 Q275 252 263 252 H57 Q45 252 45 248 Z"
+                  fill="#FFDFCF"
+                />
+
+                {/* Heart seal */}
+                <circle
+                  cx="160"
+                  cy="186"
+                  r="22"
+                  fill="#FF91B0"
+                  stroke="#FFE9ED"
+                  strokeWidth="5"
+                />
+                <text
+                  x="160"
+                  y="195"
+                  textAnchor="middle"
+                  fontSize="28"
+                  fill="#FFFFFF"
+                >
+                  ♡
+                </text>
+              </g>
+            </svg>
           </div>
+
           <div className="art-caption">psst... you're AJ's favorite</div>
         </div>
       </section>

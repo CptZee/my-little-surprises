@@ -1437,3 +1437,26 @@ h2 {
     font-size: 19px;
   }
 }
+
+.envelope-illustration {
+  position: absolute;
+  width: min(310px, 85%);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.envelope-illustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+@media (max-width: 600px) {
+  .envelope-illustration {
+    width: min(270px, 85%);
+  }
+}
