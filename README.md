@@ -1,109 +1,102 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# My Little Surprises ♡
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
-
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+A small, pastel-inspired website made to brighten someone's day, one thoughtful message at a time. Built with **Next.js**, **TypeScript**, and **Supabase**, it brings together encouraging notes, sweet thoughts, and a few playful surprises.
 
 ## Features
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Proxy
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+- **Four surprise categories:** A Little Smile (`smile`), Sweet Thoughts (`sweet`), Words of Encouragement (`motivation`), and Just Because (`random`).
+- **Random surprises:** Fetch messages from Supabase by category.
+- **Saved surprises:** Keep up to 50 unique favorites in your browser and revisit or remove them later.
+- **Share a surprise:** Share an individual message through a link, X, or a generated image for Instagram/Facebook; image download is also available where supported.
+- **Submit a surprise:** Visitors can send a message with a name and category for review.
+- **Manual moderation:** New submissions stay pending until approved in Supabase; only active, approved messages are publicly readable.
+- **Responsive design:** A soft, friendly layout for desktop and mobile.
 
-## Demo
+## Tech stack
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+- [Next.js](https://nextjs.org/) (App Router)
+- [React](https://react.dev/) and TypeScript
+- [Supabase](https://supabase.com/) (PostgreSQL and API)
+- CSS, [Lucide](https://lucide.dev/) icons, and React Icons
+- Browser `localStorage` for saved surprises
 
-## Deploy to Vercel
+## Getting started
 
-Vercel deployment will guide you through creating a Supabase account and project.
+### Prerequisites
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+- Node.js and npm
+- A Supabase project with the `surprises` table configured
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+### 1. Install dependencies
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+```bash
+npm install
+```
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+### 2. Configure environment variables
 
-## Clone and run locally
+Create `.env.local` in the project root:
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+```dotenv
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
+```
 
-2. Create a Next.js app using the Supabase Starter template npx command
+Use your own project's values. **Never commit `.env.local`, service-role keys, or other secrets.**
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+### 3. Start the development server
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+```bash
+npm run dev
+```
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+Open [http://localhost:3000](http://localhost:3000).
 
-3. Use `cd` to change into the app's directory
+## Database
 
-   ```bash
-   cd with-supabase-app
-   ```
+The application uses a Supabase table named `public.surprises`.
 
-4. Rename `.env.example` to `.env.local` and update the following:
+| Column | Purpose |
+| --- | --- |
+| `id` | Unique message identifier (UUID) |
+| `category` | `smile`, `sweet`, `motivation`, or `random` |
+| `message` | Surprise text |
+| `sender_name` | Name or nickname of the sender |
+| `is_active` | Whether the message is enabled |
+| `is_approved` | Whether it has been approved for public display |
+| `created_at` | Creation timestamp |
 
-  ```env
-  NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=[INSERT SUPABASE PROJECT API PUBLISHABLE OR ANON KEY]
-  ```
-  > [!NOTE]
-  > This example uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which refers to Supabase's new **publishable** key format.
-  > Both legacy **anon** keys and new **publishable** keys can be used with this variable name during the transition period. Supabase's dashboard may show `NEXT_PUBLIC_SUPABASE_ANON_KEY`; its value can be used in this example.
-  > See the [full announcement](https://github.com/orgs/supabase/discussions/29260) for more information.
+**Moderation flow:** A visitor submits a message → Supabase stores it with `is_approved = false` → the owner reviews it in the Supabase Table Editor → the owner sets `is_approved = true` to publish it.
 
-  Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
+Configure Row Level Security (RLS) so public reads return **only** records where `is_active = true` and `is_approved = true`. Public submissions should be insert-only and must not be able to set approval status or edit existing records. The server submission route should validate input before insertion.
 
-5. You can now run the Next.js local development server:
+## Project structure
 
-   ```bash
-   npm run dev
-   ```
+```text
+app/
+  api/
+    surprises/
+      route.ts          # Retrieve random or specific surprises
+      submit/
+        route.ts        # Submit a surprise for approval
+  globals.css           # Website styling
+  layout.tsx
+  page.tsx              # Main experience
+components/
+  SavedSurprises.tsx    # Saved-message popup
+  ShareButton.tsx       # Sharing and image generation
+  SubmitSurprise.tsx    # Visitor submission form
+```
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+> This is a guide to the features discussed for the project. File locations may differ in your local working copy.
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+## Privacy and safety notes
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+- Saved messages live in the **current browser's localStorage** under `daily-surprises`. They are not synchronized across devices.
+- Visitor-submitted messages are reviewed before publication. Avoid including private or sensitive information in submissions.
+- For a public launch, add rate limiting and bot protection to the submission endpoint.
+- Keep Supabase RLS enabled and verify that pending messages cannot be fetched by ID or category.
 
-## Feedback and issues
+## Why this exists
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+Sometimes a tiny message is enough to make an ordinary day feel a little brighter. **My Little Surprises** is a collection of those little moments, made with care. ♡
