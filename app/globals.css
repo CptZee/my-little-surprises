@@ -1328,3 +1328,112 @@ h2 {
     margin: 0 auto;
   }
 }
+
+/* Desktop: icon and text */
+.saved-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Mobile: compact circular icon button */
+@media (max-width: 600px) {
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .saved-trigger {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    padding: 0 !important;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .saved-trigger-text {
+    display: none;
+  }
+
+  .saved-trigger svg {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .saved-overlay {
+    padding: 12px;
+  }
+
+  .saved-modal {
+    width: 100%;
+    max-height: 85dvh;
+    border-radius: 20px;
+  }
+
+  .saved-header {
+    padding: 18px;
+  }
+
+  .saved-list {
+    padding: 14px;
+  }
+}
+
+
+/* Keep navigation links aligned */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-left: auto;
+  min-width: 0;
+}
+
+.note-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Mobile devices */
+@media (max-width: 600px) {
+  .topbar-actions {
+    gap: 8px;
+  }
+
+  .note-link {
+    font-size: 12px;
+  }
+}
+
+/* Very narrow screens */
+@media (max-width: 420px) {
+  .note-link {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(220, 160, 185, 0.15);
+  }
+
+  .note-link-text {
+    display: none;
+  }
+
+  .note-link-arrow {
+    font-size: 19px;
+  }
+}

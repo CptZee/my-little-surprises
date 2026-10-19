@@ -110,8 +110,18 @@ export default function Home() {
             }}
           />
 
-          <a className="saved-link" href="#how-it-works">
-            A little note for you <span>↗</span>
+          <a
+            className="saved-link note-link"
+            href="#how-it-works"
+            aria-label="A little note for you"
+            title="A little note for you"
+          >
+            <span className="note-link-text">
+              A little note for you
+            </span>
+            <span className="note-link-arrow" aria-hidden="true">
+              ↗
+            </span>
           </a>
         </div>
       </header>

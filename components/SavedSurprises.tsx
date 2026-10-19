@@ -54,14 +54,20 @@ export default function SavedSurprises({
 
     return (
         <>
+
             <button
                 type="button"
-                className="pill-button secondary"
+                className="pill-button secondary saved-trigger"
                 onClick={() => setOpen(true)}
+                aria-label="View saved surprises"
+                title="Saved Surprises"
             >
-                <Bookmark size={16} />
-                Saved Surprises
+                <Bookmark size={18} aria-hidden="true" />
+                <span className="saved-trigger-text">
+                    Saved Surprises
+                </span>
             </button>
+
 
             {open && createPortal(
                 <div className="saved-overlay" onClick={() => setOpen(false)}>
