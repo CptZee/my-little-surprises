@@ -47,17 +47,22 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
-  if (
-    request.nextUrl.pathname !== "/" &&
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  const pathname = request.nextUrl.pathname;
+
+  const isPublicRoute =
+    pathname === "/" ||
+    pathname === "/api/surprises" ||
+    pathname === "/api/surprises/submit" ||
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/login");
+
+  if (!user && !isPublicRoute) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
+
     return NextResponse.redirect(url);
   }
+
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:
@@ -73,4 +78,16 @@ export async function updateSession(request: NextRequest) {
   // of sync and terminate the user's session prematurely!
 
   return supabaseResponse;
+}
+
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Public API: no login required
+  if (pathname === "/api/surprises") {
+    return NextResponse.next();
+  }
+
+  // Existing Supabase authentication handling
+  return await updateSession(request);
 }
